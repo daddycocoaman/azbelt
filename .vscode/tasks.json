@@ -9,7 +9,7 @@
                 "-g",
                 "--debugger:native",
                 "-o:${workspaceRoot}/bin/${fileBasenameNoExtension}",
-                "src/AzureBelt.nim"
+                "${relativeFile}"
             ],
             "options": {
                 "cwd": "${workspaceRoot}"

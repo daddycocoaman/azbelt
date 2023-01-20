@@ -1,5 +1,16 @@
-# This is just an example to get you started. A typical binary package
-# uses this file as the main entry point of the application.
+import winim/lean
 
-when isMainModule:
-  echo("Hello, World!")
+import azurebelt/tbres
+
+
+proc entrypoint(args: varargs[LPCWSTR]): int {.cdecl, exportc, dynlib.} =  
+  when not defined(release):
+    AttachConsole(ATTACH_PARENT_PROCESS)
+
+  findTBRES()
+
+proc NimMain() {.cdecl, importc.}
+
+proc DllMain(hinstDLL: HINSTANCE, fdwReason: DWORD, lpvReserved: LPVOID) : BOOL {.stdcall, exportc, dynlib.} =
+  NimMain()
+  return true
