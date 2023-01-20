@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "nim: build current file (for debugging)",
+            "command": "nim",
+            "args": [
+                "compile",
+                "-g",
+                "--debugger:native",
+                "-o:${workspaceRoot}/bin/${fileBasenameNoExtension}",
+                "src/AzureBelt.nim"
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": [
+                "$nim"
+            ]
+        }
+    ]
+}

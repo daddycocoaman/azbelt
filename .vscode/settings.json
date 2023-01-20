@@ -1,0 +1,4 @@
+{
+    "nim.lintOnSave": true,
+    "nim.provider": "lsp",
+}
