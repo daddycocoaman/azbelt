@@ -15,7 +15,7 @@ requires "winim"
 
 # Build
 task dbuild, "Debug build":
-    exec "nim c -d=mingw --app=lib --nomain --cpu=amd64 --gc:arc --outdir:/workspaces/AzureBelt/bin/debug /workspaces/AzureBelt/src/AzureBelt.nim "
+    exec "nim c -d=mingw --app=lib --nomain --cpu=amd64 --gc:arc --mm:arc --outdir:bin/debug src/AzureBelt.nim"
 
-task rbuild, "Debug build":
-    exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=lib --nomain --cpu=amd64 --gc:arc --outdir:/workspaces/AzureBelt/bin/release /workspaces/AzureBelt/src/AzureBelt.nim"
+task rbuild, "Release build":
+    exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=lib --nomain --mm:arc --cpu=amd64 --gc:arc --outdir:bin/release src/AzureBelt.nim"

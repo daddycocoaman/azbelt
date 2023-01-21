@@ -1,6 +1,6 @@
 import winim/lean
 
-import azurebelt/tbres
+import azurebelt/modules/tbres
 
 
 proc entrypoint(args: varargs[LPCWSTR]): int {.cdecl, exportc, dynlib.} =  

