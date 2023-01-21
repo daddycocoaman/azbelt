@@ -1,4 +1,5 @@
 import winim/lean
+import std/strutils
 
 proc green*(s: string): string = "\e[32m" & s & "\e[0m"
 proc grey*(s: string): string = "\e[90m" & s & "\e[0m"
@@ -7,8 +8,11 @@ proc red*(s: string): string = "\e[31m" & s & "\e[0m"
 proc cyan*(s: string): string = "\e[36m" & s & "\e[0m"
 proc magenta*(s: string): string = "\e[35m" & s & "\e[0m"
 proc blue*(s: string): string = "\e[34m" & s & "\e[0m"
-proc bold*(s: string): string = "\e[1m" & s & "\e[0m"
-proc underline*(s: string): string = "\e[4m" & s & "\e[0m"
+
+proc makeSectionTitle*(title: string): string =
+  result = "*".repeat(10).cyan & "\n"
+  result.add title.cyan & "\n"
+  result.add "*".repeat(10).cyan
 
 proc cryptUnprotectData*(data: openarray[byte|char]): string =
   var

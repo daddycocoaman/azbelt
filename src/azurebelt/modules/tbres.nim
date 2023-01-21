@@ -1,5 +1,5 @@
 import os
-import std/[base64, json, sequtils, streams, strutils, tables, times]
+import std/[base64, json, sequtils, streams, strtabs, strutils, times]
 
 import ../constants
 import ../utils
@@ -9,7 +9,7 @@ proc readTBRESStr(stream: Stream): string =
   var length = swapInt32Endian(stream.readInt32())
   return stream.readStr(length)
 
-proc findTBRES*() : void =
+proc runTBRES*() : void =
   var cache_path = getHomeDir() / "Appdata/Local/Microsoft/TokenBroker/Cache"
 
   # If doesn't exist, return

@@ -1,13 +1,13 @@
 import winim/lean
 
 import azurebelt/modules/tbres
-
+import azurebelt/modules/msal
 
 proc entrypoint(args: varargs[LPCWSTR]): int {.cdecl, exportc, dynlib.} =  
   when not defined(release):
     AttachConsole(ATTACH_PARENT_PROCESS)
 
-  findTBRES()
+  runMSAL()
 
 proc NimMain() {.cdecl, importc.}
 

@@ -1,6 +1,6 @@
-import std/tables
+import std/strtabs
 
-const
+var
     WELL_KNOWN_APPIDS* = {
         "23523755-3a2b-41ca-9315-f81f3f566a95": "ACOM Azure Website",
         "69893ee3-dd10-4b1c-832d-4870354be3d8": "AEM-DualAuth",
@@ -93,4 +93,4 @@ const
         "45a330b1-b1ec-4cc1-9161-9f03992aa49f": "Windows Store for Business",
         "00000005-0000-0ff1-ce00-000000000000": "Yammer",
         "c1c74fed-04c9-4704-80dc-9f79a2e515cb": "Yammer Web",
-        "e1ef36fd-b883-4dbf-97f0-9ece4b576fc6": "Yammer Web Embed"}.toTable
+        "e1ef36fd-b883-4dbf-97f0-9ece4b576fc6": "Yammer Web Embed"}.newStringTable
