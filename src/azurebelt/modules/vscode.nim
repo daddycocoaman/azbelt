@@ -13,5 +13,5 @@ proc runVSCode*() : string =
     #     cred_array: PCREDENTIALW
             
     # var creds =  CredEnumerateW(NULL, 0, out cred_count, out ptr cred_array)
-    # # if creds == 0:
-    # #     echo "Error: " & $getLastError()
+    # if creds == 0:
+    #     echo "Error: " & $getLastError()
