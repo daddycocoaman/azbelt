@@ -14,11 +14,14 @@ proc makeSectionTitle*(title: string): string =
   result.add title.cyan & "\n"
   result.add "*".repeat(20).cyan & "\n"
 
+proc makeSubSectionTitle*(title: string): string =
+  result = "-".repeat(10) & title & "-".repeat(10) & "\n"
+
 proc cryptUnprotectData*(data: openarray[byte|char]): string =
   var
     input = DATA_BLOB(cbData: cint data.len, pbData: cast[ptr BYTE](unsafeaddr data[0]))
     output: DATA_BLOB
-  
+
   if CryptUnprotectData(addr input, nil, nil, nil, nil, 0, addr output) != 0:
     result.setLen(output.cbData)
     if output.cbData != 0:
@@ -26,7 +29,7 @@ proc cryptUnprotectData*(data: openarray[byte|char]): string =
     LocalFree(cast[HLOCAL](output.pbData))
 
 proc cryptUnprotectData*(data: string): string {.inline.} =
-  result = cryptUnprotectData(data.toOpenArray(0, data.len - 1))
+  result = cryptUnprotectData(data.toOpenArrayByte(0, data.len - 1))
 
 proc swapInt32Endian*(x: int): int {.inline.} =
   result = ((x shr 24) and 0x000000FF).int or

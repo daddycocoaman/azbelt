@@ -9,10 +9,10 @@ proc readTBRESStr(stream: Stream): string =
   var length = swapInt32Endian(stream.readInt32())
   return stream.readStr(length)
 
-proc runTBRES*() : string =
-  result.add makeSectionTitle("TokenBroker Cache")
+proc runTBRES*() : string  =
+  result = makeSectionTitle("TokenBroker Cache")
   var cache_path = getHomeDir() / "Appdata/Local/Microsoft/TokenBroker/Cache"
-
+  
   # If doesn't exist, return
   if not dirExists(cache_path):
     result.add "TokenBroker cache not found" & "\n"
@@ -35,25 +35,32 @@ proc runTBRES*() : string =
     # Find the string "WTRes_Token"
     var username_index = decrypted.find("WA_UserName")
     var token_key_index = decrypted.find("WTRes_Token")
+
     if token_key_index >= 0:
+      # Parse username
       var decrypted_stream = newStringStream(decrypted[username_index..^1])
       discard decrypted_stream.readStr(0xB) # Skip WA_UserName length
-
-      # Parse username
       var username = readTBRESStr(decrypted_stream)
-      discard readTBRESStr(decrypted_stream) # Skip next header
-      var token = readTBRESStr(decrypted_stream)
-      
-      # Base64 decode second split of token on "." and parse as JSON
-      var token_json = parseJson(decode(token.split(".")[1]))
-      var audience = token_json["aud"].getStr()
-      var isValid = token_json["exp"].getInt() > getTime().toUnix
-      var valid_Str = if isValid: green("True") else: "False"
 
-      result.add ("Found: " & file).green & "\n"
-      result.add "\tUsername: " & username & "\n"
-      result.add "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience) & "\n"
-      result.add "\tScopes: " & token_json["scp"].getStr() & "\n"
-      result.add "\tValid: " & valid_Str & "\n"
-      result.add "\tToken: " & token & "\n"
-  return result
+      decrypted_stream = newStringStream(decrypted[token_key_index..^1])
+      discard decrypted_stream.readStr(0xB) # Skip WTRes_Token length
+      var token = readTBRESStr(decrypted_stream)
+
+      # Base64 decode second split of token on "." and parse as JSON
+      var split_token = token.split(".")
+      if split_token.len == 5:
+        result.add ("Found: " & file).green & "\n"
+        result.add "\tUsername: " & username & "\n"
+        result.add "\tToken (JWE): " & token & "\n"
+      else:
+        var token_json = parseJson(decode(split_token[1]))
+        var audience = token_json["aud"].getStr()
+        var isValid = token_json["exp"].getInt() > getTime().toUnix
+        var valid_Str = if isValid: green("True") else: "False"
+
+        result.add ("Found: " & file).green & "\n"
+        result.add "\tUsername: " & username & "\n"
+        result.add "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience) & "\n"
+        result.add "\tScopes: " & token_json["scp"].getStr() & "\n"
+        result.add "\tValid: " & valid_Str & "\n"
+        result.add "\tToken: " & token & "\n"

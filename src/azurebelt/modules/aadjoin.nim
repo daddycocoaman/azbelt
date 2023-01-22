@@ -1,4 +1,3 @@
-import std/tables
 import winim/lean
 import winim/inc/lm
 
@@ -53,6 +52,7 @@ proc runAADJoin*(): string =
             result.add "MDM Enrollment URL: ".green & $joinInfo.pszMdmEnrollmentUrl & "\n"
 
             if joinInfo.pUserInfo[] != nil:
+                result.add makeSubSectionTitle("User Info")
                 result.add $joinInfo.pUserInfo[].pszUserEmail & "\n"
                 result.add $joinInfo.pUserInfo[].pszUserKeyId & "\n"
                 result.add $joinInfo.pUserInfo[].pszUserKeyName & "\n"
