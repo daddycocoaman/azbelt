@@ -1,0 +1,17 @@
+{
+    "name": "azurebelt",
+    "version": "0.0.1",
+    "command_name": "azurebelt",
+    "extension_author": "daddycocoaman",
+    "original_author": "daddycocoaman",
+    "repo_url": "https://github.com/daddycocoaman/AzureBelt",
+    "help": "Azure credential gathering",
+    "entrypoint": "enter",
+    "files": [
+        {
+            "os": "windows",
+            "arch": "amd64",
+            "path": "AzureBelt.dll"
+        }
+    ]
+}

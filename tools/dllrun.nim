@@ -9,7 +9,7 @@ type
 let lib = loadLib(paramStr(1))
 assert lib != nil, "Error loading library"
 
-let entry = cast[EntryFunction](lib.symAddr("entrypoint"))
+let entry = cast[EntryFunction](lib.symAddr("go"))
 assert entry != nil, "Error loading 'entrypoint' function from library"
 
 let args = commandLineParams()[1..^1].mapIt(LPCWSTR(it))

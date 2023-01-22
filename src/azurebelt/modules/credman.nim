@@ -1,8 +1,6 @@
-import os
-import std/[base64, json, strtabs, strutils, times, unicode]
+import std/[base64, strutils]
 
 import winim/lean
-import ../constants
 import ../utils
 import winim/inc/wincred
 import system
