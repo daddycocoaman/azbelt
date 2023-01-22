@@ -19,3 +19,11 @@ task dbuild, "Debug build":
 
 task rbuild, "Release build":
     exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=lib --nomain --mm:arc --cpu=amd64 --gc:arc --outdir:bin/release src/AzureBelt.nim"
+
+task dllrun, "Build DLL runner":
+    exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=console --mm:arc --cpu=amd64 --gc:arc --outdir:bin tools/dllrun.nim"
+
+task all, "Build all":
+    dbuildTask()
+    rbuildTask()
+    dllrunTask()

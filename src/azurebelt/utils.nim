@@ -10,9 +10,9 @@ proc magenta*(s: string): string = "\e[35m" & s & "\e[0m"
 proc blue*(s: string): string = "\e[34m" & s & "\e[0m"
 
 proc makeSectionTitle*(title: string): string =
-  result = "*".repeat(10).cyan & "\n"
+  result = "*".repeat(20).cyan & "\n"
   result.add title.cyan & "\n"
-  result.add "*".repeat(10).cyan
+  result.add "*".repeat(20).cyan & "\n"
 
 proc cryptUnprotectData*(data: openarray[byte|char]): string =
   var

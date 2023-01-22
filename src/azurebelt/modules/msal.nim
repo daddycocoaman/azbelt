@@ -4,14 +4,14 @@ import std/[base64, json, strtabs, strutils, times]
 import ../constants
 import ../utils
 
-proc parseMSALCache*(cache_path: string): void = 
-    if not cache_path.fileExists():
-        echo "No MSAL cache found"
+proc parseMSALCache*(cache_path: string): string =
+    if not cache_path.fileExists(): 
+        result.add "No MSAL cache found" & "\n"
         return
 
     var cache = try: readFile(cache_path)
                 except:
-                    echo "Failed to read MSAL cache"
+                    result.add "Failed to read MSAL cache" & "\n"
                     return
     var decrypted = cryptUnprotectData(cache)
     var tokens = parseJson(decrypted)
@@ -27,7 +27,7 @@ proc parseMSALCache*(cache_path: string): void =
         var homeAccountId = entry["home_account_id"].getStr()
         accountsTable[homeAccountId] = username        
     
-    echo "Access Tokens:".green
+    result.add "Access Tokens:".green & "\n"
     for key, entry in accessTokens.pairs():
         var token = entry["secret"].getStr()
         var token_json = parseJson(decode(token.split(".")[1]))
@@ -36,23 +36,23 @@ proc parseMSALCache*(cache_path: string): void =
         var isValid = token_json["exp"].getInt() > getTime().toUnix
         var valid_Str = if isValid: green("True") else: "False"
 
-        echo "\tUsername: " & accountsTable.getOrDefault(home_account_id, home_account_id)
-        echo "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience)
-        echo "\tScopes: " & token_json["scp"].getStr()
-        echo "\tValid: " & valid_Str
-        echo "\tToken: " & token & "\n"
+        result.add "\tUsername: " & accountsTable.getOrDefault(home_account_id, home_account_id) & "\n"
+        result.add "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience) & "\n"
+        result.add "\tScopes: " & token_json["scp"].getStr() & "\n"
+        result.add "\tValid: " & valid_Str & "\n"
+        result.add "\tToken: " & token & "\n"
     
-    echo "Refresh Tokens:".green
+    result.add "Refresh Tokens:".green & "\n"
     for key, entry in refreshTokens.pairs():
         var home_account_id = entry["home_account_id"].getStr()
         var environment = entry["environment"].getStr() 
         var secret = entry["secret"].getStr()
 
-        echo "\tUsername: " & accountsTable.getOrDefault(home_account_id, home_account_id)
-        echo "\tEnvironment: " & environment
-        echo "\tSecret: " & secret & "\n"
+        result.add "\tUsername: " & accountsTable.getOrDefault(home_account_id, home_account_id) & "\n"
+        result.add "\tEnvironment: " & environment & "\n"
+        result.add "\tSecret: " & secret & "\n"
     
-    echo "Id Tokens:".green
+    result.add "Id Tokens:".green & "\n"
     for key, entry in idTokens.pairs():
         var home_account_id = entry["home_account_id"].getStr()
         var token = entry["secret"].getStr()
@@ -61,20 +61,20 @@ proc parseMSALCache*(cache_path: string): void =
         var isValid = token_json["exp"].getInt() > getTime().toUnix
         var valid_Str = if isValid: green("True") else: "False"
 
-        echo "\tUsername: " & accountsTable.getOrDefault(home_account_id, home_account_id)
-        echo "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience)
-        echo "\tValid: " & valid_Str
-        echo "\tToken: " & token & "\n"
+        result.add "\tUsername: " & accountsTable.getOrDefault(home_account_id, home_account_id) & "\n"
+        result.add "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience) & "\n"
+        result.add "\tValid: " & valid_Str & "\n"
+        result.add "\tToken: " & token & "\n"
 
-proc runAzCliMSAL*() : void =
-    echo makeSectionTitle("Azure CLI MSAL Cache")
-    parseMSALCache(getHomeDir() / ".azure/msal_token_cache.bin")
+proc runAzCliMSAL*() : string =
+    result.add makeSectionTitle("Azure CLI MSAL Cache")
+    result.add parseMSALCache(getHomeDir() / ".azure/msal_token_cache.bin")
 
-proc runSharedMSAL*() : void =
-    echo makeSectionTitle("Shared MSAL Cache")
-    parseMSALCache(getHomeDir() / "Appdata/Local/.IdentityService/msal.cache")
+proc runSharedMSAL*() : string =
+    result.add makeSectionTitle("Shared MSAL Cache")
+    result.add parseMSALCache(getHomeDir() / "Appdata/Local/.IdentityService/msal.cache")
 
-proc runMSAL*() : void =
-    runAzCliMSAL()
-    runSharedMSAL()
+proc runMSAL*() : string =
+    result.add runAzCliMSAL()
+    result.add runSharedMSAL()
 

