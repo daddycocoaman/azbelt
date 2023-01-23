@@ -5,6 +5,7 @@ import ../utils
 import winim/inc/wincred
 import system
 
+{.warning[HoleEnumConv]:off.} # CRED_TYPE_MAXIMUM_EX is by design
 type
     CRED_TYPE = enum
         CRED_TYPE_GENERIC = 1
@@ -49,6 +50,7 @@ proc runCredman*() : string =
                 for i in 0 ..< blob_size:
                     blob_str.add blob[i]
                 
+                # Need to figure why this is not working
                 if blob_str.startsWith("AQAAA"):
                     try:
                         var decoded = cryptUnprotectData(base64.decode(blob_str))

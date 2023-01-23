@@ -1,22 +1,22 @@
 {
-    "name": "azurebelt",
+    "name": "azbelt",
     "version": "0.0.1",
-    "command_name": "azurebelt",
+    "command_name": "azbelt",
     "extension_author": "daddycocoaman",
     "original_author": "daddycocoaman",
-    "repo_url": "https://github.com/daddycocoaman/AzureBelt",
+    "repo_url": "https://github.com/daddycocoaman/AzBelt",
     "help": "Azure credential gathering",
     "entrypoint": "enter",
     "files": [
         {
             "os": "windows",
             "arch": "amd64",
-            "path": "azurebelt.x64.dll"
+            "path": "azbelt.x64.dll"
         },
         {
             "os": "windows",
             "arch": "386",
-            "path": "azurebelt.x86.dll"
+            "path": "azbelt.x86.dll"
         }
     ]
 }

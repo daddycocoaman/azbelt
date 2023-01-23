@@ -1,10 +1,10 @@
 import winim/lean
 
-import azurebelt/modules/aadjoin
-import azurebelt/modules/credman
-import azurebelt/modules/environment
-import azurebelt/modules/msal
-import azurebelt/modules/tbres
+import azbelt/modules/aadjoin
+import azbelt/modules/credman
+import azbelt/modules/environment
+import azbelt/modules/msal
+import azbelt/modules/tbres
 
 type
   callback = proc(msg: LPCSTR, msglen: int): int {.cdecl.}
@@ -37,8 +37,10 @@ proc enter*(args: LPCSTR, bufferSize: int, cb: callback): int {.cdecl, exportc, 
   return 0  
 
 proc go*(args: varargs[LPCWSTR]): void {.cdecl, exportc, dynlib.} =  
-  when not defined(release):
-    AttachConsole(ATTACH_PARENT_PROCESS)
+
+  if args.len == 0:
+    echo "Options - all, aadjoin, credman, env, tbres, msal"
+    return 
 
   case ($args[0]):
     of "all":
