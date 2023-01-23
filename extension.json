@@ -11,7 +11,12 @@
         {
             "os": "windows",
             "arch": "amd64",
-            "path": "AzureBelt.dll"
+            "path": "azurebelt.x64.dll"
+        },
+        {
+            "os": "windows",
+            "arch": "386",
+            "path": "azurebelt.x86.dll"
         }
     ]
 }

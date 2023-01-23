@@ -1,9 +1,10 @@
 import winim/lean
 
 import azurebelt/modules/aadjoin
-import azurebelt/modules/tbres
-import azurebelt/modules/msal
 import azurebelt/modules/credman
+import azurebelt/modules/environment
+import azurebelt/modules/msal
+import azurebelt/modules/tbres
 
 type
   callback = proc(msg: LPCSTR, msglen: int): int {.cdecl.}
@@ -13,9 +14,10 @@ proc enter*(args: LPCSTR, bufferSize: int, cb: callback): int {.cdecl, exportc, 
 
   case ($args):
     of "":
-      output.add "Options - aadjoin, tbres, msal, credman, all"
+      output.add "Options - all, aadjoin, credman, env, tbres, msal"
     of "all":
       output.add runAADJoin()
+      output.add runEnvironment()
       output.add runTBRES()
       output.add runMSAL()
       output.add runCredman()
@@ -23,6 +25,8 @@ proc enter*(args: LPCSTR, bufferSize: int, cb: callback): int {.cdecl, exportc, 
       output.add runAADJoin()
     of "credman":
       output.add runCredman()
+    of "env":
+      output.add runEnvironment()
     of "tbres":
       output.add runTBRES()
     of "msal":
@@ -39,6 +43,7 @@ proc go*(args: varargs[LPCWSTR]): void {.cdecl, exportc, dynlib.} =
   case ($args[0]):
     of "all":
       echo runAADJoin()
+      echo runEnvironment()
       echo runTBRES()
       echo runMSAL()
       echo runCredman()
@@ -46,6 +51,8 @@ proc go*(args: varargs[LPCWSTR]): void {.cdecl, exportc, dynlib.} =
       echo runAADJoin()
     of "credman":
       echo runCredman()
+    of "env":
+      echo runEnvironment()
     of "tbres":
       echo runTBRES()
     of "msal":
