@@ -15,7 +15,7 @@ proc makeSectionTitle*(title: string): string =
   result.add "*".repeat(20).cyan & "\n"
 
 proc makeSubSectionTitle*(title: string): string =
-  result = "-".repeat(10) & title & "-".repeat(10) & "\n"
+  result = ("-".repeat(10) & title & "-".repeat(10) & "\n").yellow
 
 proc cryptUnprotectData*(data: openarray[byte|char]): string =
   var

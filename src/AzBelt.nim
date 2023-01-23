@@ -3,6 +3,7 @@ import winim/lean
 import azbelt/modules/aadjoin
 import azbelt/modules/credman
 import azbelt/modules/environment
+import azbelt/modules/managed
 import azbelt/modules/msal
 import azbelt/modules/tbres
 
@@ -17,6 +18,7 @@ proc enter*(args: LPCSTR, bufferSize: int, cb: callback): int {.cdecl, exportc, 
       output.add "Options - all, aadjoin, credman, env, tbres, msal"
     of "all":
       output.add runAADJoin()
+      output.add runManaged()
       output.add runEnvironment()
       output.add runTBRES()
       output.add runMSAL()
@@ -31,6 +33,8 @@ proc enter*(args: LPCSTR, bufferSize: int, cb: callback): int {.cdecl, exportc, 
       output.add runTBRES()
     of "msal":
       output.add runMSAL()
+    of "managed":
+      output.add runManaged()
     else:
         output.add "Unknown command: " & $args
   discard cb(output, output.len)
@@ -39,12 +43,13 @@ proc enter*(args: LPCSTR, bufferSize: int, cb: callback): int {.cdecl, exportc, 
 proc go*(args: varargs[LPCWSTR]): void {.cdecl, exportc, dynlib.} =  
 
   if args.len == 0:
-    echo "Options - all, aadjoin, credman, env, tbres, msal"
+    echo "Options - all, aadjoin, credman, env, tbres, managed, msal"
     return 
 
   case ($args[0]):
     of "all":
       echo runAADJoin()
+      echo runManaged()
       echo runEnvironment()
       echo runTBRES()
       echo runMSAL()
@@ -59,6 +64,8 @@ proc go*(args: varargs[LPCWSTR]): void {.cdecl, exportc, dynlib.} =
       echo runTBRES()
     of "msal":
       echo runMSAL()
+    of "managed":
+      echo runManaged()
     else:
         echo "Unknown command: " & $args[0]
 
