@@ -7,6 +7,7 @@ var
         "0cb7b9ec-5336-483b-bc31-b15b5788de71": "ASM Campaign Servicing",
         "7b7531ad-5926-4f2d-8a1d-38495ad33e17": "Azure Advanced Threat Protection",
         "e9f49c6b-5ce5-44c8-925d-015017e9f7ad": "Azure Data Lake",
+        "499b84ac-1321-427f-aa17-267ca6975798": "Azure DevOps",
         "835b2a73-6e10-4aa5-a979-21dfda45231c": "Azure Lab Services Portal",
         "c44b4083-3bb0-49c1-b47d-974e53cbdf3c": "Azure Portal",
         "37182072-3c9c-4f6a-a4b3-b3f91cacffce": "AzureSupportCenter",
