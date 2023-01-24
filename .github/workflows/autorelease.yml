@@ -16,14 +16,11 @@ jobs:
         uses: devcontainers/ci@v0.2
         with:
           runCmd: |
-            nimble release
+            nimble -d install && nimble release
             mkdir dist
             cp azbelt*.dll extension.json dist/
             cd dist
             tar -czvf ../azbelt.tar.gz .
-            cd ..
-            ls -al
-            ls -al dist/
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -32,5 +29,6 @@ jobs:
           token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            azbelt*.dll
-            azbelt.tar.gz
+            *.dll
+            *.exe
+            ../azbelt.tar.gz

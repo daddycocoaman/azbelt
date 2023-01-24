@@ -23,7 +23,7 @@
 		"CHOOSENIM_NO_ANALYTICS": "1"
 	},
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "nimble -y install winim",
+	"postCreateCommand": "nimble -y install winim puppy",
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
