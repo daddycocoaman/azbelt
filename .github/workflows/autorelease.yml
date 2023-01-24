@@ -9,7 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout (GitHub)
         uses: actions/checkout@v2
 
@@ -22,7 +21,7 @@ jobs:
             cp azbelt*.dll extension.json dist/
             cd dist
             tar -czvf ..\azbelt.tar.gz .
-      
+            
       - name: Github Release
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
