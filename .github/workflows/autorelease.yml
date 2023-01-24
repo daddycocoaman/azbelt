@@ -21,6 +21,9 @@ jobs:
             cp azbelt*.dll extension.json dist/
             cd dist
             tar -czvf ../azbelt.tar.gz .
+            cd ..
+            ls -al
+            ls -al dist/
 
       - name: Release
         uses: softprops/action-gh-release@v1
