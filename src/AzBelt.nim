@@ -6,6 +6,7 @@ import azbelt/modules/environment
 import azbelt/modules/managed
 import azbelt/modules/msal
 import azbelt/modules/tbres
+import azbelt/modules/sso
 
 type
   callback = proc(msg: LPCSTR, msglen: int): int {.cdecl.}
@@ -35,6 +36,8 @@ proc enter*(args: LPCSTR, bufferSize: int, cb: callback): int {.cdecl, exportc, 
       output.add runMSAL()
     of "managed":
       output.add runManaged()
+    of "sso":
+      output.add runSSO()
     else:
         output.add "Unknown command: " & $args
   discard cb(output, output.len)
@@ -66,6 +69,8 @@ proc go*(args: varargs[LPCWSTR]): void {.cdecl, exportc, dynlib.} =
       echo runMSAL()
     of "managed":
       echo runManaged()
+    of "sso":
+      echo runSSO()
     else:
         echo "Unknown command: " & $args[0]
 

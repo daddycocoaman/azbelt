@@ -16,7 +16,7 @@
 			"omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions https://github.com/zsh-users/zsh-syntax-highlighting"
 		},
 		"ghcr.io/devcontainers-contrib/features/bash-command:1": {
-			"command": "echo $PATH >> ~/.profile"
+			"command": "export PATH=$PATH:$HOME/.nimble/bin & echo $PATH >> ~/.profile"
 		}
 	},
 	"remoteEnv": {

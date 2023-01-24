@@ -17,6 +17,7 @@ proc makeSectionTitle*(title: string): string =
 proc makeSubSectionTitle*(title: string): string =
   result = ("-".repeat(10) & title & "-".repeat(10) & "\n").yellow
 
+# https://forum.nim-lang.org/t/6414
 proc cryptUnprotectData*(data: openarray[byte|char]): string =
   var
     input = DATA_BLOB(cbData: cint data.len, pbData: cast[ptr BYTE](unsafeaddr data[0]))

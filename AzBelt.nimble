@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.2.0"
+version       = "0.3.0"
 author        = "Leron Gray"
 description   = "Azure credential searching in Nim"
 license       = "MIT"
@@ -11,6 +11,7 @@ bin           = @["azbelt"]
 # Dependencies
 
 requires "nim >= 1.6.10"
+requires "puppy 2.0.3"
 requires "winim"
 
 # Build
