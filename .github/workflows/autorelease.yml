@@ -17,8 +17,7 @@ jobs:
         with:
           runCmd: |
             nimble -d install && nimble release
-            mkdir dist
-            cp azbelt*.dll extension.json dist/
+            cp extension.json dist/
             cd dist
             tar -czvf ../azbelt.tar.gz .
 
