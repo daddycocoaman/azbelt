@@ -1,3 +1,5 @@
+import os
+
 import winim/lean
 
 import azbelt/modules/aadjoin
@@ -79,3 +81,7 @@ proc NimMain() {.cdecl, importc.}
 proc DllMain(hinstDLL: HINSTANCE, fdwReason: DWORD, lpvReserved: LPVOID) : BOOL {.stdcall, exportc, dynlib.} =
   NimMain()
   return true
+
+
+when isMainModule:
+  go(paramStr(1))
