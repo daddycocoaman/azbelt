@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.2.0"
 author        = "Leron Gray"
 description   = "Azure credential searching in Nim"
 license       = "MIT"
@@ -20,7 +20,7 @@ task release, "Release build":
 
 task dllrun, "Build DLL runner":
     exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=console --mm:arc --cpu=amd64 --gc:arc --outdir:tools tools/dllrun.nim"
-    
+
 task all, "Build all":
     releaseTask()
     dllrunTask()

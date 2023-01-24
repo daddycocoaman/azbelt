@@ -1,0 +1,33 @@
+name: 'build' 
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+    branches: ["main", "releasetest"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v2
+
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.2
+        with:
+          runCmd: |
+            nimble release
+            mkdir dist
+            cp azbelt*.dll extension.json dist/
+            cd dist
+            tar -czvf ..\azbelt.tar.gz .
+      
+      - name: Github Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        files: |
+          azbelt*.dll
+          azbelt.tar.gz
