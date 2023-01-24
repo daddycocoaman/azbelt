@@ -20,8 +20,7 @@ jobs:
             mkdir dist
             cp azbelt*.dll extension.json dist/
             cd dist
-            tar -czvf ..\azbelt.tar.gz .
-            cd ..
+            tar -czvf ../azbelt.tar.gz .
 
       - name: Release
         uses: softprops/action-gh-release@v1
