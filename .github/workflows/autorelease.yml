@@ -21,12 +21,12 @@ jobs:
             cp azbelt*.dll extension.json dist/
             cd dist
             tar -czvf ..\azbelt.tar.gz .
-            
+
       - name: Github Release
-      uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        prerelease: false
-        files: |
-          azbelt*.dll
-          azbelt.tar.gz
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            azbelt*.dll
+            azbelt.tar.gz
