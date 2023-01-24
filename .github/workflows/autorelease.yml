@@ -17,8 +17,8 @@ jobs:
         with:
           runCmd: |
             nimble -d install && nimble release
-            cp extension.json dist/
-            cd dist
+            cp extension.json build/
+            cd build
             tar -czvf ../azbelt.tar.gz .
 
       - name: Release
