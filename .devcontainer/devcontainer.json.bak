@@ -3,7 +3,7 @@
 {
 	"name": "Ubuntu",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "nimlang/nim:1.6.10-ubuntu-regular",
+	"image": "mcr.microsoft.com/devcontainers/base:jammy",
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
 			"configureZshAsDefaultShell": "true"
@@ -11,6 +11,8 @@
 		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
 			"packages": "build-essential,mingw-w64,binutils,git,curl"
 		},
+		"ghcr.io/devcontainers-contrib/features/asdf-package:1": {},
+		"ghcr.io/devcontainers-contrib/features/nim-asdf:2": {},
 		"ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {
 			"plugins": "git zsh-autosuggestions zsh-syntax-highlighting",
 			"omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions https://github.com/zsh-users/zsh-syntax-highlighting"
@@ -23,7 +25,7 @@
 		"CHOOSENIM_NO_ANALYTICS": "1"
 	},
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "nimble -y install winim",
+	"postCreateCommand": "nimble -y install winim c2nim",
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
