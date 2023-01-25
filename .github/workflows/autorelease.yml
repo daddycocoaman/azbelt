@@ -30,6 +30,7 @@ jobs:
           mv ./minisign ~/minisign
 
       - name: Sign Package
+        run: |
           touch ~/minisign.key && chmod 600 ~/minisign.key
           echo -e "${{ secrets.MINISIGN_PRIVATE_KEY }}" > ~/minisign.key
           MANIFEST=$(cat build/extension.json | base64 -w 0)
