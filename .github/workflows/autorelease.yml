@@ -20,8 +20,22 @@ jobs:
             cp extension.json build/
             cd build
             tar -czvf ../azbelt.tar.gz .
+      
+      - name: Minisign
+        run: |
+          MINISIGN_TMP=`mktemp -d`
+          cd $MINISIGN_TMP
+          wget https://github.com/aead/minisign/releases/download/v0.2.0/minisign-linux-amd64.tar.gz
+          tar xvf minisign-linux-amd64.tar.gz
+          mv ./minisign ~/minisign
 
-      - name: Release
+      - name: Sign Package
+          touch ~/minisign.key && chmod 600 ~/minisign.key
+          echo -e "${{ secrets.MINISIGN_PRIVATE_KEY }}" > ~/minisign.key
+          MANIFEST=$(cat build/extension.json | base64 -w 0)
+          bash -c "echo \"\" | ~/minisign -s ~/minisign.key -S -m ./azbelt.tar.gz -t \"$MANIFEST\" -x azbelt.minisig"
+
+      - name: Release to Github
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -31,3 +45,5 @@ jobs:
             build/*.dll
             build/*.exe
             azbelt.tar.gz
+            azbelt.minisig
+

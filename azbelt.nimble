@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.3.1"
+version       = "0.3.2"
 author        = "Leron Gray"
 description   = "Azure credential searching in Nim"
 license       = "MIT"
