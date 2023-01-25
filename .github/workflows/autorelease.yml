@@ -16,7 +16,7 @@ jobs:
         uses: devcontainers/ci@v0.2
         with:
           runCmd: |
-            nimble -d install && nimble release
+            nimble release
             cp extension.json build/
             cd build
             tar -czvf ../azbelt.tar.gz .

@@ -15,14 +15,21 @@ requires "puppy 2.0.3"
 requires "winim"
 
 # Build
+var depsChecked = false
+task ensureDeps, "Ensure Dependencies Installed":
+    if depsChecked == false:
+        exec "nimble -d -y install"
+    depsChecked = true
 
 task dll, "Build DLLs":
-    exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=lib --nomain --mm:arc --cpu=amd64 --gc:arc -o:build/azbelt.x64.dll src/AzBelt.nim"
-    exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=lib --nomain --mm:arc --cpu=i386 --gc:arc -o:build/azbelt.x86.dll src/AzBelt.nim"
+    ensureDepsTask()
+    exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=lib --nomain --mm:arc --cpu=amd64 --gc:arc -o:build/azbelt.x64.dll src/azbelt.nim"
+    exec "nim c -d=mingw -d:danger -d:strip --opt:size -d:release --passc=-flto --passl=-flto --app=lib --nomain --mm:arc --cpu=i386 --gc:arc -o:build/azbelt.x86.dll src/azbelt.nim"
 
 task exe, "Build EXEs":
-    exec "nim c -d=mingw -d:danger -d:strip --opt=size -d:release --passc=-flto --passl=-flto --app=console --mm:arc --cpu=amd64 --gc:arc -o:build/azbelt.x64.exe src/AzBelt.nim"
-    exec "nim c -d=mingw -d:danger -d:strip --opt=size -d:release --passc=-flto --passl=-flto --app=console --mm:arc --cpu=i386 --gc:arc -o:build/azbelt.x86.exe src/AzBelt.nim"
+    ensureDepsTask()
+    exec "nim c -d=mingw -d:danger -d:strip --opt=size -d:release --passc=-flto --passl=-flto --app=console --mm:arc --cpu=amd64 --gc:arc -o:build/azbelt.x64.exe src/azbelt.nim"
+    exec "nim c -d=mingw -d:danger -d:strip --opt=size -d:release --passc=-flto --passl=-flto --app=console --mm:arc --cpu=i386 --gc:arc -o:build/azbelt.x86.exe src/azbelt.nim"
 
 task release, "Release build":
     dllTask()

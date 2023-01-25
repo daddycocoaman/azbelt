@@ -4,7 +4,7 @@
     "command_name": "azbelt",
     "extension_author": "daddycocoaman",
     "original_author": "daddycocoaman",
-    "repo_url": "https://github.com/daddycocoaman/AzBelt",
+    "repo_url": "https://github.com/daddycocoaman/azbelt",
     "help": "Azure credential gathering",
     "entrypoint": "enter",
     "files": [

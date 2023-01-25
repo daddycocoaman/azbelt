@@ -2,6 +2,6 @@ nimcache/
 nimblecache/
 htmldocs/
 
-/bin
+/build
 *.dll
 *.exe
