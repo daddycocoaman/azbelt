@@ -84,4 +84,5 @@ proc DllMain(hinstDLL: HINSTANCE, fdwReason: DWORD, lpvReserved: LPVOID) : BOOL 
 
 
 when isMainModule:
-  go(paramStr(1))
+  if paramCount() > 0:
+    go(paramStr(1))
