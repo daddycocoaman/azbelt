@@ -16,6 +16,7 @@ jobs:
         with:
           runCmd: |
             nimble -y release
+            mkdir -p build
             cp extension.json build/
             cd build
             tar -czvf ../azbelt.tar.gz .
